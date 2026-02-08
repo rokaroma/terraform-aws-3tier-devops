@@ -1,0 +1,24 @@
+name: Terraform Destroy (Manual)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  terraform-destroy:
+    runs-on: ubuntu-latest
+    environment: production   # requires approval
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        run: terraform init
+        working-directory: environments/prod
+
+      - name: Terraform Destroy
+        run: terraform destroy
+        working-directory: environments/prod
